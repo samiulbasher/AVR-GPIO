@@ -8,13 +8,13 @@ A little easier to read and write of the GPIO register for an AVR microcontrolle
 > SBI(TCCR1A,WGM10) //WGM10 bit HIGH "set bit"
 > CIB(TCCR1A,WGM10) //WGM10 bit LOW  "clear bit"
  
-* Set waveform generation. Mode 10: 1010 [PWM, Phase correct, Top ICR1]\
+* Set waveform generation. Mode 10: 1010 [PWM, Phase correct, Top ICR1]
 > SBI(TCCR1B,WGM13);\
 > CBI(TCCR1B,WGM12);\
 > SBI(TCCR1A,WGM11);\
 > CBI(TCCR1A,WGM10);
 
-* Set timer output mode "Normal port operation" = 00 (Disconnected)\
+* Set timer output mode "Normal port operation" = 00 (Disconnected)
 > CBI(TCCR1A,COM1C0);\
 > CBI(TCCR1A,COM1C1);
 
@@ -23,7 +23,7 @@ A little easier to read and write of the GPIO register for an AVR microcontrolle
 > SBI(TCCR1B,CS11);\
 > CBI(TCCR1B,CS10);
 
-* Start timer in compare output mode, Phase Correct "Clear when up-counting, Set down-counting  = 10"\
+* Start timer in compare output mode, Phase Correct
 > SBI(TCCR1A,COM1C1);
 
 * Individual pin mode settings
