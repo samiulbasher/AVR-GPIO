@@ -839,3 +839,51 @@
     #define PL7_PWM			NULL
  #endif /*	_AVR_ATmega{1280,2560}__ */
 #endif /* AVRGPIO_H_ */
+
+
+
+
+Sub SaveBlockFromPartSketch()
+    ' Access the active part document
+    Dim swApp As SldWorks.SldWorks
+    Dim swModel As SldWorks.ModelDoc2
+    Set swApp = CreateObject("SldWorks.Application")
+    Set swModel = swApp.ActiveDoc
+    
+    ' Access the sketch in the part document
+    Dim swSketchMgr As SldWorks.SketchManager
+    Dim swSketch As SldWorks.Sketch
+    Set swSketchMgr = swModel.SketchManager
+    Set swSketch = swSketchMgr.ActiveSketch
+    
+    ' Select all entities in the sketch
+    Dim swSelMgr As SldWorks.SelectionMgr
+    Set swSelMgr = swModel.SelectionManager
+    Dim swSketchSel As SldWorks.SketchSelection
+    Set swSketchSel = swSelMgr.CreateSketchSelection
+    swSketchSel.SelectAll
+    
+    ' Create the block using the selected entities
+    Dim swBlockDef As SldWorks.BlockDefinition
+    Set swBlockDef = swModel.Extension.CreateBlockDefinition(swSketchSel)
+    
+    Dim blockName As String
+    blockName = "MyBlock" ' Provide a suitable name for the block
+    
+    Dim swBlockInst As SldWorks.BlockInstance
+    Set swBlockInst = swModel.Extension.InsertBlockInstance(blockName, swBlockDef, 0, 0, 0)
+    
+    ' Save the part document
+    swModel.Save
+    
+    ' Clean up
+    Set swBlockInst = Nothing
+    Set swBlockDef = Nothing
+    Set swSketchSel = Nothing
+    Set swSelMgr = Nothing
+    Set swSketch = Nothing
+    Set swSketchMgr = Nothing
+    Set swModel = Nothing
+    Set swApp = Nothing
+End Sub
+
